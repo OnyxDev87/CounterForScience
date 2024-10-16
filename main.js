@@ -6,8 +6,6 @@ canvas.height = 630
 
 let counter = 0
 let trialList = []
-let Xoffset = [10]
-let Yoffset = [0]
 
 // alert("Press space to add to the counter, press 'r' to reset it and save the value, press 'p' to clear all saved data")
 // alert("I MADE CHANGES AND IT IS A LITTLE GLITCHY RIGHT NOW-Miles")
@@ -24,12 +22,7 @@ function animate() {
   c.font = '25px Arial'
   c.fillText("Previous Trials:", 0, 100)
   for (let i = 0; i < trialList.length; i++) {
-    c.fillText(JSON.stringify(trialList[i]), Xoffset[i], 125+(Yoffset[i]*25))
-
-    if (125+(Yoffset[i]*25) >= canvas.height) {
-      Yoffset.push(0)
-      Xoffset.push(300)
-    }
+    c.fillText(JSON.stringify(trialList[i]), 10, 125+(i*25))
   }
 }
 
@@ -41,7 +34,6 @@ document.addEventListener("keydown", (event) => {
 
 document.addEventListener("keydown", (event) => {
     if (event.key === "r") {
-      Yoffset++
       trialList.push(counter)
       counter = 0
     }
