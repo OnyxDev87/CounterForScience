@@ -5,9 +5,12 @@ canvas.width = 1350
 canvas.height = 630
 
 let counter = 0
-let oldCount = 0
+let trialList = []
+let Xoffset = 10
+let Yoffset = 0
 
-alert("Press space to add to the counter, press 'r' to reset it and save the value")
+alert("Press space to add to the counter, press 'r' to reset it and save the value, press 'p' to clear all saved data")
+alert("I MADE CHANGES AND IT IS A LITTLE GLITCHY RIGHT NOW/n-Miles")
 
 function animate() {
     window.requestAnimationFrame(animate)
@@ -16,23 +19,39 @@ function animate() {
     c.fillRect(0, 0, canvas.width, canvas.height)
 
     c.fillStyle = '#d3d3d3'
-    c.font = '100px Arial'
-    c.fillText('Counter: ' + counter, (canvas.width/2)-c.measureText('Counter: ').width, canvas.height/2)
-    c.font = '50px Arial'
-    c.fillText("Old number: " + oldCount, (canvas.width/2)-c.measureText('Counter: ').width, (canvas.height/2)-100)
+    c.font = '75px Arial'
+    c.fillText('Counter: ' + counter, 0, 60)
+    c.font = '25px Arial'
+    c.fillText("Previous Trials:", 0, 100)
+    for (let i = 0; i < trialList.length; i++) {
+      c.fillText(JSON.stringify(trialList[i]), Xoffset, 125+(i*25))
+
+      if (125+(Yoffset*25) >= canvas.height) {
+        Yoffset = 0
+        Xoffset += 300
+      }
+    }
 }
 
 document.addEventListener("keydown", (event) => {
     if (event.key === " ") {
       counter++
     }
-  })
+})
 
 document.addEventListener("keydown", (event) => {
     if (event.key === "r") {
-        oldCount = counter
-        counter = 0
+      Yoffset++
+      trialList.push(counter)
+      counter = 0
     }
+})
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "p") {
+      trialList = []
+      counter = 0
+  }
 })
 
 animate()
