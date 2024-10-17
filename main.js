@@ -10,6 +10,14 @@ let trialList = []
 // alert("Press space to add to the counter, press 'r' to reset it and save the value, press 'p' to clear all saved data")
 // alert("I MADE CHANGES AND IT IS A LITTLE GLITCHY RIGHT NOW-Miles")
 
+function getAverage(list) {
+  let sum = 0
+  for (let i = 0; i < list.length; i++) {
+    sum+= list[i]
+  }
+  return sum/list.length
+}
+
 function animate() {
   window.requestAnimationFrame(animate)
 
@@ -24,6 +32,15 @@ function animate() {
   for (let i = 0; i < trialList.length; i++) {
     c.fillText(JSON.stringify(trialList[i]), 10, 125+(i*25))
   }
+
+  if (trialList.length >= 20) {
+    alert("The limit is 20 tests per list, I know its annoying, but deal with it. Just hit 'p' and keep going.")
+    trialList.pop()
+  }
+
+  c.font = '35px Arial'
+  c.fillText("Data Analysis:", canvas.width/2, 100)
+  c.fillText("Average: " + getAverage(trialList))
 }
 
 document.addEventListener("keydown", (event) => {
