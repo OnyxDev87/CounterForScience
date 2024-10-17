@@ -8,7 +8,6 @@ let counter = 0
 let trialList = []
 
 // alert("Press space to add to the counter, press 'r' to reset it and save the value, press 'p' to clear all saved data")
-// alert("I MADE CHANGES AND IT IS A LITTLE GLITCHY RIGHT NOW-Miles")
 
 function getAverage(list) {
   let sum = 0
@@ -37,10 +36,10 @@ function animate() {
     alert("The limit is 20 tests per list, I know its annoying, but deal with it. Just hit 'p' and keep going.")
     trialList.pop()
   }
-
-  c.font = '35px Arial'
-  c.fillText("Data Analysis:", canvas.width/2, 100)
-  c.fillText("Average: " + getAverage(trialList))
+  if (trialList.length > 0) {
+    c.font = '35px Arial'
+    c.fillText("Average: " + getAverage(trialList), (canvas.width/2), 100)
+  }
 }
 
 document.addEventListener("keydown", (event) => {
