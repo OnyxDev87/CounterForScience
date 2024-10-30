@@ -7,7 +7,7 @@ canvas.height = 630
 let counter = 0
 let trialList = []
 
-alert("Press space to add to the counter, press 'r' to reset it and save the value, press 'p' to clear all saved data")
+alert("Press space to add to the counter, press 'r' to reset it and save the value, press 'p' to clear all saved data, press delete or backspace to go down one")
 
 function getAverage(list) {
   let sum = 0
