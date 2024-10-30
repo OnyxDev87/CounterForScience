@@ -7,7 +7,7 @@ canvas.height = 630
 let counter = 0
 let trialList = []
 
-// alert("Press space to add to the counter, press 'r' to reset it and save the value, press 'p' to clear all saved data")
+alert("Press space to add to the counter, press 'r' to reset it and save the value, press 'p' to clear all saved data")
 
 function getAverage(list) {
   let sum = 0
@@ -46,6 +46,14 @@ document.addEventListener("keydown", (event) => {
     if (event.key === " ") {
       counter++
     }
+})
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Backspace" || event.key === "Delete") {
+    if (counter < 1) {
+      return
+    } else counter--
+  }
 })
 
 document.addEventListener("keydown", (event) => {
