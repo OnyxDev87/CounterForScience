@@ -181,7 +181,8 @@ document.addEventListener("keydown", (event) => {
       counter = 0;
       break;
     case "p":
-      data = {};
+      amount_of_trials_current = 1;
+      data = {1:[]};
       counter = 0;
       break;
     case "e":
