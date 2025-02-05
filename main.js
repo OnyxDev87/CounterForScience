@@ -5,9 +5,9 @@ canvas.width = 1350
 canvas.height = 630
 
 let counter = 0
-let trialList = []
+let amount_of_trials_current = 0;
+let data  = {};
 
-alert("Press space to add to the counter, press 'r' to reset it and save the value, press 'p' to clear all saved data, press delete or backspace to go down one")
 
 function getAverage(list) {
   let sum = 0
@@ -16,6 +16,50 @@ function getAverage(list) {
   }
   return sum/list.length
 }
+
+function convert(items) {
+  // Get the header (keys) of the items object
+  const header = Object.keys(items);
+
+  // Get the values of the items object
+  const values = Object.values(items);
+
+  // Join the header and values into CSV format
+  const csv = [
+    header.join(','), // header row first
+    values.join(',')  // values row
+  ].join('\r\n');     // Join both rows with a line break
+
+  return csv;
+}
+
+function exportData() {
+  let items = {};
+  for (let i = 0; i < trialList.length; i++) {
+    items[("Trial " + (i+1))] = trialList[i];
+  }
+  const data = convert(items);
+  // Create a Blob with the CSV data
+  const blob = new Blob([data], { type: 'text/csv' });
+
+  // Create a temporary link element
+  const link = document.createElement('a');
+
+  // Create a URL for the Blob
+  const url = URL.createObjectURL(blob);
+
+  // Set the download attribute with a filename
+  link.href = url;
+  link.download = 'data.csv'; // You can customize the filename here
+
+  // Programmatically trigger a click on the link to download the file
+  link.click();
+
+  // Clean up by revoking the Blob URL
+  URL.revokeObjectURL(url);
+
+}
+
 
 function animate() {
   window.requestAnimationFrame(animate)
@@ -43,31 +87,31 @@ function animate() {
 }
 
 document.addEventListener("keydown", (event) => {
-    if (event.key === " ") {
-      counter++
+  switch(event.key) {
+    case "r":
+      data[amount_of_trials_current].push(counter);
+      counter = 0;
+      break;
+    case "p":
+      data = [];
+      counter = 0;
+      break;
+    case "e":
+      amount_of_trials_current++;
+      counter = 0;
+    case " ":
+      counter++;
+      break;
+    case "Backspace":
+    case "Delete":
+      if (counter < 1) {
+        return
+      } else counter--
+      break;
     }
-})
+    
 
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Backspace" || event.key === "Delete") {
-    if (counter < 1) {
-      return
-    } else counter--
-  }
-})
+});
 
-document.addEventListener("keydown", (event) => {
-    if (event.key === "r") {
-      trialList.push(counter)
-      counter = 0
-    }
-})
-
-document.addEventListener("keydown", (event) => {
-  if (event.key === "p") {
-      trialList = []
-      counter = 0
-  }
-})
 
 animate()
