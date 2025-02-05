@@ -9,9 +9,39 @@
     </head>
     <body>
       <canvas></canvas>
-      <button id="export">Export</button>
+      <br>
+      <button id="export" onclick="exportData()">Export</button>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js"></script>
 
+        <p>
+          <h4><strong>LEGEND:</strong></h4>
+          <!-- <br> -->
+          <strong>r</strong> -> add data point to current trial #
+          <br>
+          <strong>e</strong> -> shift to next trial
+          <br>
+          <strong>space</strong> -> add to counter
+          <br>
+          <strong>delete</strong> -> subtract from counter
+          <br>
+          <strong>backspace</strong> -> subtract from counter
+
+          <br>
+          Export button exports to CSV, which can be imported into google sheets
+          <br>
+          When in Complex mode, click on an entry to delete it
+          <br>
+          Current trial is denoted in green
+          <br>
+        <p>Select data rendering option:</p>
+        <input type="radio" id="Simple" name="render_option" value="Simple" checked = "balls">
+        <label for="Simple">Simple ( just shows your data )</label><br>
+        <input type="radio" id="Complex" name="render_option" value="Complex">
+        <label for="Complex">Complex ( click to delete a data point )</label><br>
+        <button onclick="updateSettings()">Save</button>
+        <br><br><br><br><br>
+
       <script src='main.js'></script>
+
     </body>
 </html>
