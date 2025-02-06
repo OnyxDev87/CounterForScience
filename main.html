@@ -5,6 +5,10 @@
       body {
         background-color: #0a0a0a;
       }
+
+      strong, p {
+        color: white;
+      }
       </style>
     </head>
     <body>
@@ -13,7 +17,7 @@
       <button id="export" onclick="exportData()">Export</button>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js"></script>
 
-        <p color="white">
+        <p>
           <h4><strong>LEGEND:</strong></h4>
           <!-- <br> -->
           <strong>r</strong> -> add data point to current trial #
@@ -35,7 +39,7 @@
           <br>
           Current trial is denoted in green
           <br>
-        <p>Select data rendering option:</p>
+        Select data rendering option:</p>
         <input type="radio" id="Simple" name="render_option" value="Simple" checked = "balls">
         <label for="Simple">Simple ( just shows your data )</label><br>
         <input type="radio" id="Complex" name="render_option" value="Complex">
