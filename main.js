@@ -1,3 +1,8 @@
+const COLUMN_SPACING = 400; // space between columns
+const START_X = 10;
+const START_Y = 125;
+const LINE_HEIGHT = 25;
+
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
 
@@ -72,6 +77,49 @@ function updateSettings() {
 
 
 
+// function animateComplex() {
+//   window.requestAnimationFrame(animateComplex);
+//   localStorage.setItem("data", JSON.stringify(data));
+//   localStorage.setItem("trials", amount_of_trials_current);
+
+//   c.fillStyle = '#1e1e1e';
+//   c.fillRect(0, 0, canvas.width, canvas.height);
+
+//   c.fillStyle = '#d3d3d3';
+//   c.font = '75px Arial';
+//   c.fillText('Counter: ' + counter, 0, 60);
+//   c.font = '25px Arial';
+//   c.fillText("Previous Trials:", 0, 100);
+
+//   textPositions.length = 0; // Reset stored positions
+
+//   let yOffset = 125; // Starting y position for data display
+
+//   Object.keys(data).forEach((trialIndex) => {
+//       let trialData = data[trialIndex]; // Get data array for this trial
+      
+//       for (let dataIndex = 0; dataIndex < trialData.length; dataIndex++) {
+//           console.log()
+//           if (trialIndex == Object.keys(data).length) {
+//               c.fillStyle = 'green'; // Highlight active dataset
+//           } else {
+//               c.fillStyle = '#d3d3d3';
+//           }
+
+//           let text = `Trial ${parseInt(trialIndex)} , case #${dataIndex+1}:  ${trialData[dataIndex]}`;
+//           let x = 10;
+//           let y = yOffset;
+
+//           c.fillText(text, x, y);
+
+//           // Store each data point's position
+//           textPositions.push({ trialIndex: parseInt(trialIndex), dataIndex, x, y, text });
+
+//           yOffset += 25; // Move down for the next entry
+//       }
+//   });
+// }
+
 function animateComplex() {
   window.requestAnimationFrame(animateComplex);
   localStorage.setItem("data", JSON.stringify(data));
@@ -86,34 +134,33 @@ function animateComplex() {
   c.font = '25px Arial';
   c.fillText("Previous Trials:", 0, 100);
 
-  textPositions.length = 0; // Reset stored positions
+  textPositions.length = 0;
 
-  let yOffset = 125; // Starting y position for data display
+  let y = START_Y;
+  let x = START_X;
 
   Object.keys(data).forEach((trialIndex) => {
-      let trialData = data[trialIndex]; // Get data array for this trial
-      
-      for (let dataIndex = 0; dataIndex < trialData.length; dataIndex++) {
-          console.log()
-          if (trialIndex == Object.keys(data).length) {
-              c.fillStyle = 'green'; // Highlight active dataset
-          } else {
-              c.fillStyle = '#d3d3d3';
-          }
+    let trialData = data[trialIndex];
 
-          let text = `Trial ${parseInt(trialIndex)} , case #${dataIndex+1}:  ${trialData[dataIndex]}`;
-          let x = 10;
-          let y = yOffset;
+    for (let dataIndex = 0; dataIndex < trialData.length; dataIndex++) {
+      c.fillStyle = (trialIndex == Object.keys(data).length) ? 'green' : '#d3d3d3';
 
-          c.fillText(text, x, y);
+      let text = `Trial ${parseInt(trialIndex)}, case #${dataIndex + 1}: ${trialData[dataIndex]}`;
+      c.fillText(text, x, y);
 
-          // Store each data point's position
-          textPositions.push({ trialIndex: parseInt(trialIndex), dataIndex, x, y, text });
+      textPositions.push({ trialIndex: parseInt(trialIndex), dataIndex, x, y, text });
 
-          yOffset += 25; // Move down for the next entry
+      y += LINE_HEIGHT;
+
+      // Move to next column if we exceed canvas height
+      if (y + LINE_HEIGHT > canvas.height) {
+        y = START_Y;
+        x += COLUMN_SPACING;
       }
+    }
   });
 }
+
 
 // Function to check if a click is within a data point
 canvas.addEventListener("click", function(event) {
@@ -139,36 +186,78 @@ function onDataPointClick(trialIndex, dataIndex) {
   
 }
 
-function animateSimple() {
+// function animateSimple() {
   
-  window.requestAnimationFrame(animateSimple)
+//   window.requestAnimationFrame(animateSimple)
+//   localStorage.setItem("data", JSON.stringify(data));
+//   localStorage.setItem("trials", amount_of_trials_current);
+
+//   c.fillStyle = '#1e1e1e'
+//   c.fillRect(0, 0, canvas.width, canvas.height)
+
+//   c.fillStyle = '#d3d3d3'
+//   c.font = '75px Arial'
+//   c.fillText('Counter: ' + counter, 0, 60)
+//   c.font = '25px Arial'
+//   c.fillText("Previous Trials:", 0, 100)
+//   for (let i = 0; i < Object.keys(data).length; i++) {
+//     if (i === Object.keys(data).length - 1) {
+//         c.fillStyle = 'green'; // Set last dataset to green
+//     } else {
+//         c.fillStyle = '#d3d3d3';
+//     }
+//     c.fillText("Trial "+(i+1) + ": " + JSON.stringify(data[JSON.stringify(i+1)]), 10, 125 + (i * 25));
+//   }
+
+//   // if (data.length >= 20) {
+//   //   alert("The limit is 20 tests per list, I know its annoying, but deal with it. Just hit 'p' and keep going.")
+//   //   trialList.pop()
+//   // }
+//   if (data.length > 0) {
+//     c.font = '35px Arial'
+//     c.fillText("Average: " + getAverage(data[amount_of_trials_current]), (canvas.width/2), 100)
+//   }
+// }
+
+function animateSimple() {
+  window.requestAnimationFrame(animateSimple);
   localStorage.setItem("data", JSON.stringify(data));
   localStorage.setItem("trials", amount_of_trials_current);
 
-  c.fillStyle = '#1e1e1e'
-  c.fillRect(0, 0, canvas.width, canvas.height)
+  c.fillStyle = '#1e1e1e';
+  c.fillRect(0, 0, canvas.width, canvas.height);
 
-  c.fillStyle = '#d3d3d3'
-  c.font = '75px Arial'
-  c.fillText('Counter: ' + counter, 0, 60)
-  c.font = '25px Arial'
-  c.fillText("Previous Trials:", 0, 100)
-  for (let i = 0; i < Object.keys(data).length; i++) {
-    if (i === Object.keys(data).length - 1) {
-        c.fillStyle = 'green'; // Set last dataset to green
-    } else {
-        c.fillStyle = '#d3d3d3';
+  c.fillStyle = '#d3d3d3';
+  c.font = '75px Arial';
+  c.fillText('Counter: ' + counter, 0, 60);
+  c.font = '25px Arial';
+  c.fillText("Previous Trials:", 0, 100);
+
+  let y = START_Y;
+  let x = START_X;
+
+  const keys = Object.keys(data);
+
+  for (let i = 0; i < keys.length; i++) {
+    const trialKey = keys[i];
+    const isCurrent = (i === keys.length - 1);
+
+    c.fillStyle = isCurrent ? 'green' : '#d3d3d3';
+
+    const text = `Trial ${trialKey}: ${JSON.stringify(data[trialKey])}`;
+    c.fillText(text, x, y);
+
+    y += LINE_HEIGHT;
+
+    if (y + LINE_HEIGHT > canvas.height) {
+      y = START_Y;
+      x += COLUMN_SPACING;
     }
-    c.fillText("Trial "+(i+1) + ": " + JSON.stringify(data[JSON.stringify(i+1)]), 10, 125 + (i * 25));
   }
 
-  // if (data.length >= 20) {
-  //   alert("The limit is 20 tests per list, I know its annoying, but deal with it. Just hit 'p' and keep going.")
-  //   trialList.pop()
-  // }
-  if (data.length > 0) {
-    c.font = '35px Arial'
-    c.fillText("Average: " + getAverage(data[amount_of_trials_current]), (canvas.width/2), 100)
+  if (data[amount_of_trials_current]?.length > 0) {
+    c.font = '35px Arial';
+    c.fillText("Average: " + getAverage(data[amount_of_trials_current]), canvas.width / 2, 100);
   }
 }
 
