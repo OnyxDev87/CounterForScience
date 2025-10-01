@@ -1,4 +1,4 @@
-const COLUMN_SPACING = 400; // space between columns
+const COLUMN_SPACING = 250; // space between columns
 const START_X = 10;
 const START_Y = 125;
 const LINE_HEIGHT = 25;
